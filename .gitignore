@@ -1,0 +1,9 @@
+node_modules/
+server/
+test/
+tests/
+
+*.zip
+*.rar
+*.docx
+
