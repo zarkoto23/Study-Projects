@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="style.css">
+  <title>Камък-Ножица-Хартия-v2</title>
+  
+</head>
+<body>
+  <h1>Камък, Ножица, Хартия</h1>
+  <div class="playerChoices">
+   <button onclick="playLogic('Камък')">&#9994</button>
+   <button onclick="playLogic('Ножица')" >&#9996</button>
+   <button onclick="playLogic('Хартия')">&#9995</button>
+  </div>
+  <div class="gamePlay">
+    <h2 id="player">Играч:</h2>
+    <h2 id="computer">Компютър:</h2>
+    <h2 id="winner"></h2>
+
+
+  </div>
+
+  <div class="scorePlayer"> Победи на играч:
+    <span id="playerPoints">0</span>
+   
+  </div>
+  <div class="scoreComputer"> Победи на компютър:
+    <span id="computerPoints">0</span>
+   
+  </div>
+  <div class="tieScore"> Равенства:
+    <span id="tiePoints">0</span>
+   
+  </div>
+ 
+  
+  <script src="script.js"></script>
+</body>
+</html>
