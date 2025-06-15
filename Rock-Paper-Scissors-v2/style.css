@@ -1,0 +1,39 @@
+.body{
+  padding-top: 10%;
+  background-color:darkseagreen;   
+}
+
+.gameText{
+  text-align: center;
+  margin-bottom: 10%;
+  background-color: grey;
+
+}
+
+.choiceBtn{
+  width: 25%;
+ 
+  text-align: center;
+  margin: 3%;
+
+  background-color: lightblue;
+  border: solid;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 120%;
+  font-weight: bold;
+  transition: box-shadow 0.1s
+}
+
+.choiceBtn:hover{
+
+  box-shadow: 5px 5px 10px rgba(1, 1, 1, 0.9)
+}
+
+.choiceBtn:active {
+  opacity: 0.7;
+  transform: translate(3px, 3px);
+  box-shadow: 5px 5px 10px rgba(1, 1, 1, 0.9);
+
+  border-color: greenyellow;
+}
