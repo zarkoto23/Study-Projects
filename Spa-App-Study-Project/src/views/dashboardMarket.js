@@ -1,54 +1,43 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import  page from "../../node_modules/page/page.mjs";
+import page from "../../node_modules/page/page.mjs";
+import { baseItemsAvailableUrl } from "../links.js";
+import { get } from "../requester.js";
 
 const mainEl = document.querySelector("main");
 
 export default async function showDashboard() {
-  render(dashboardTemplate(), mainEl);
+  try {
+    const result = await get(baseItemsAvailableUrl);
+    render(dashboardTemplate(result), mainEl);
+
+    return result;
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
-function dashboardTemplate() {
+function dashboardTemplate(result) {
   return html`
     <h3 class="heading">Marketplace</h3>
     <section id="dashboard">
-
-
-
-    <div class="drone">
-        <img src="./images/avata2.jpg" alt="example1" />
-        <h3 class="model">DJI Avata</h3>
-        <div class="drone-info">
-          <p class="price">Price: €450</p>
-          <p class="condition">Condition: New</p>
-          <p class="weight">Weight: 410g</p>
-        </div>
-        <a class="details-btn" href="#">Details</a>
-      </div>
-      <div class="drone">
-        <img src="./images/inspire3.jpg" alt="example1" />
-        <h3 class="model">DJI Inspire 3</h3>
-        <div class="drone-info">
-          <p class="price">Price: €9999</p>
-          <p class="condition">Condition: Used</p>
-          <p class="weight">Weight: 3995g</p>
-        </div>
-        <a class="details-btn" href="#">Details</a>
-      </div>
-      <div class="drone">
-        <img src="./images/mini3.png" alt="example1" />
-        <h3 class="model">DJI Mini 3 Pro</h3>
-        <div class="drone-info">
-          <p class="price">Price: €520</p>
-          <p class="condition">Condition: New</p>
-          <p class="weight">Weight: 249g</p>
-        </div>
-        <a class="details-btn" href="#">Details</a>
-      </div>
+      ${result.map(
+        (element) => html`
+          <div class="drone">
+            <img src="${element.imageUrl}" alt="example1" />
+            <h3 class="model">${element.model}</h3>
+            <div class="drone-info">
+              <p class="price">Price: €${element.price}</p>
+              <p class="condition">Condition: ${element.condition}</p>
+              <p class="weight">Weight: ${element.weight}g</p>
+            </div>
+            <a class="details-btn" href="/details/${element._id}">Details</a>
+          </div>
+        `
+      )}
     </section>
 
-
-
-
-    <h3 class="no-drones">No Drones Available</h3>
+    ${result.length === 0
+      ? html`<h3 class="no-drones">No Drones Available</h3>`
+      : ""}
   `;
 }
