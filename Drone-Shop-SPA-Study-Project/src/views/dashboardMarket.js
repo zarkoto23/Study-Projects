@@ -8,6 +8,8 @@ const mainEl = document.querySelector("main");
 export default async function showDashboard() {
   try {
     const result = await get(baseItemsAvailableUrl);
+    console.log(result);
+    
     render(dashboardTemplate(result), mainEl);
 
     return result;
