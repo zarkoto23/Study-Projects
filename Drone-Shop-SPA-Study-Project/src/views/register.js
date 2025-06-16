@@ -1,5 +1,6 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import page from "../../node_modules/page/page.mjs";
+import { showError } from "../notification.js";
 import userService from "../userService.js";
 
 const mainEl = document.querySelector("#main-element");
@@ -44,9 +45,15 @@ async function registerUser(e) {
   e.preventDefault();
 
   const userData = Object.fromEntries(new FormData(e.currentTarget));
-  console.log(userData);
+  for (let key in userData) {
+  if (userData[key].replace(/\s/g, '').length === 0) {
+    showError('All fields must be filled in!');
+    return;
+  }
+}
+
   if (userData.password !== userData["re-password"]) {
-    alert("Passwords don't match");
+    showError("Passwords don't match");
     return;
   }
 
@@ -55,7 +62,7 @@ async function registerUser(e) {
 
     page.redirect("/");
   } catch (err) {
-    alert(err.message);
+    showError(err.message);
     return;
   }
 }

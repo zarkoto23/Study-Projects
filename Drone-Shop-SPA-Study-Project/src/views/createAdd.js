@@ -1,7 +1,8 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import  page  from "../../node_modules/page/page.mjs";
+import page from "../../node_modules/page/page.mjs";
 import { post } from "../requester.js";
 import { baseItemsUrl } from "../links.js";
+import { showError } from "../notification.js";
 
 const mainEl = document.querySelector("main");
 
@@ -53,28 +54,23 @@ function createTemplate() {
   `;
 }
 
+async function onCreate(e) {
+  e.preventDefault();
 
-async function onCreate(e){
-  e.preventDefault()
+  const droneData = Object.fromEntries(new FormData(e.currentTarget));
 
-  const droneData=Object.fromEntries(new FormData(e.currentTarget))
-  
-   for(let key in droneData){
-    if(droneData[key].trim()===''){
-      alert('All fields required!')
-      return
+  for (let key in droneData) {
+    if (droneData[key].trim() === "") {
+      showError("All fields required!");
+      return;
     }
-   }
+  }
 
-   try{
-   const result= await post(baseItemsUrl, droneData)
-   page.redirect('/dashboard')
-   console.log(result);
-   }catch(err){
-    alert(err.message)
-   }
-   
-    
-
-
+  try {
+    const result = await post(baseItemsUrl, droneData);
+    page.redirect("/dashboard");
+    console.log(result);
+  } catch (err) {
+    showError(err.message);
+  }
 }

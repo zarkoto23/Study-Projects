@@ -2,6 +2,7 @@ import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import page from "../../node_modules/page/page.mjs";
 import { get, put } from "../requester.js";
 import { baseItemsUrl } from "../links.js";
+import { showError } from "../notification.js";
 
 const mainEl = document.querySelector("#main-element");
 
@@ -66,7 +67,7 @@ async function onEdit(e,id){
   
    for(let key in droneData){
     if(droneData[key].trim()===''){
-      alert('All fields required!')
+      showError('All fields required!')
       return
     }
    }
@@ -75,7 +76,7 @@ async function onEdit(e,id){
    const result= await put(`${baseItemsUrl}/${id}`, droneData)
    page.redirect(`/details/${id}`)
    }catch(err){
-    alert(err.message)
+    showError(err.message)
    }
    
     

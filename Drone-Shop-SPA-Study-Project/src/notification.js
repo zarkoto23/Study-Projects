@@ -1,25 +1,20 @@
-import page from "../node_modules/page/page.mjs"
-
 export function showError(msg) {
-  const errorBoxEl=document.querySelector('.notification')
-  const spanEl=document.querySelector('.msg')
+  const sectionEl = document.querySelector("#notifications");
+  const errorBoxEl = document.querySelector("#errorBox");
+  const spanEl = document.querySelector(".msg");
 
-
-  errorBoxEl.style.display='block'
-  spanEl.textContent=msg
-  console.log('hui');
+  sectionEl.style.display = "block";
+  errorBoxEl.style.display = "block";
+  spanEl.textContent = msg;
 
   setTimeout(() => {
-    errorBoxEl.style.display='none'
-    page.redirect('/dashboard')
+    sectionEl.style.display = "none";
+    errorBoxEl.style.display = "none";
   }, 3000);
-  
 }
 
-
-  // <section id="notifications">
-  //   <div id="errorBox" class="notification">
-  //     <span class="msg">MESSAGE</span>
-  //   </div>
-  // </section>
-  // <div id="wrapper"></div>
+// <section id="notifications">
+//     <div id="errorBox" class="notification">
+//       <span class="msg"></span>
+//     </div>
+//   </section>

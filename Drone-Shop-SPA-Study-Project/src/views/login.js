@@ -37,6 +37,13 @@ async function loginUser(e) {
   const formData = new FormData(e.currentTarget);
   const userData = Object.fromEntries(formData);
 
+  for (let key in userData) {
+    if (userData[key].replace(/\s/g, '').length === 0) {
+      showError('Моля, попълни всички полета коректно.');
+      return;
+    }
+  }
+
   try {
     const result = await userService.login(userData);
 
@@ -46,3 +53,4 @@ async function loginUser(e) {
     return;
   }
 }
+
