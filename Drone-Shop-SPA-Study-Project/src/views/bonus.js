@@ -1,5 +1,0 @@
-  //  <section id="notifications">
-  //   <div id="errorBox" class="notification">
-  //     <span class="msg">MESSAGE</span>
-  //   </div>
-  // </section>

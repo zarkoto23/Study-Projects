@@ -1,7 +1,7 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import page from "../../node_modules/page/page.mjs";
+import { showError } from "../notification.js";
 import userService from "../userService.js";
-import showNav from "./nav.js";
 
 const mainEl = document.querySelector("main");
 
@@ -42,7 +42,7 @@ async function loginUser(e) {
 
     page.redirect("/");
   } catch (err) {
-    alert(err.message);
+    showError(err.message)
     return;
   }
 }

@@ -1,7 +1,6 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import page from "../../node_modules/page/page.mjs";
 import userService from "../userService.js";
-import showNav from "./nav.js";
 
 const mainEl = document.querySelector("#main-element");
 
