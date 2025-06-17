@@ -11,6 +11,7 @@ function setUser(userData) {
   localStorage.setItem("email", userData.email);
 }
 
+
 function removeUser() {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
