@@ -1,35 +1,49 @@
 import page from "../../node_modules/page/page.mjs";
 import { render, html } from "../../node_modules/lit-html/lit-html.js";
+import userUtil from "../userUtil.js";
+import { get, host } from "../request.js";
 
 const navEl = document.querySelector("header");
 
 export async function showNav() {
-  render(navTemplate(), navEl);
+  const token = userUtil.getToken();
+
+  render(navTemplate(token), navEl);
 }
 
-function navTemplate() {
+function navTemplate(token) {
   return html`
-    <!-- Navigation -->
-    <a id="logo" href="#"
+    <a id="logo" href="/"
       ><img id="logo-img" src="./images/show_logo.png" alt="logo" />
     </a>
     <nav>
       <div>
-        <a href="#">TV Shows</a>
+        <a href="/dashboard">TV Shows</a>
         <a href="#">Search</a>
       </div>
 
-      <!-- Logged-in users -->
-      <div class="user">
-        <a href="#">Add Show</a>
-        <a href="#">Logout</a>
-      </div>
-
-      <!-- Guest users -->
-      <div class="guest">
-        <a href="#">Login</a>
-        <a href="#">Register</a>
-      </div>
+      ${token
+        ? html` <div class="user">
+            <a href="/create">Add Show</a>
+            <a href="#" @click=${onLogout}>Logout</a>
+          </div>`
+        : html`
+            <div class="guest">
+              <a href="/login">Login</a>
+              <a href="/register">Register</a>
+            </div>
+          `}
     </nav>
   `;
+}
+
+async function onLogout() {
+  try {
+    const result = await get(`${host}users/logout`);
+
+    userUtil.removeUser();
+    page.redirect("/");
+  } catch (err) {
+    return alert(err.message);
+  }
 }

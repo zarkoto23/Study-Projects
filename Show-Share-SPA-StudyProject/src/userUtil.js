@@ -1,24 +1,22 @@
-function getToken(){
-  return localStorage.getItem('token')
+function getToken() {
+  return localStorage.getItem("token");
 }
-function getUserId(){
-  return localStorage.getItem('userId')
-}
-
-
-function setUser(userData){
-  localStorage.setItem('token',userData.accessToken)
-  localStorage.setItem('userId', userData._id)
-  localStorage.setItem('email', userData.email)
+function getUserId() {
+  return localStorage.getItem("userId");
 }
 
-
-function removeUser(){
-    localStorage.removeItem('token',userData.accessToken)
-  localStorage.removeItem('userId', userData._id)
-  localStorage.removeItem('email', userData.email)
+function setUser(userData) {
+  localStorage.setItem("token", userData.accessToken);
+  localStorage.setItem("userId", userData._id);
+  localStorage.setItem("email", userData.email);
 }
 
-const userUtil={getToken, getUserId, setUser, removeUser}
+function removeUser() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("email");
+}
 
-export default userUtil
+const userUtil = { getToken, getUserId, setUser, removeUser };
+
+export default userUtil;

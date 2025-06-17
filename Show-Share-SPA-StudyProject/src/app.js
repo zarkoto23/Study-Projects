@@ -9,11 +9,16 @@ import { showEdit } from "./views/edit.js";
 import { showLogin } from "./views/login.js";
 import { showRegister } from "./views/register.js";
 
+page("*", (ctx, next) => {
+  showNav();
+  next();
+});
+page("/", showHome);
+page("/login", showLogin);
+page("/register", showRegister);
+page("/create", showCreate);
+page("/edit/:id", showEdit);
+page("/details/:id", showDetails);
+page("/dashboard", showDashboard);
 
-page('*',(ctx,next)=>{
-  showNav()
-  next()
-})
-page('/',showHome)
-
-page()
+page();
