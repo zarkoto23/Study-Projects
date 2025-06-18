@@ -38,12 +38,10 @@ function navTemplate(token) {
 }
 
 async function onLogout() {
-  try {
-    const result = await get(`${host}users/logout`);
+  
+    await get(`${host}users/logout`);
 
     userUtil.removeUser();
     page.redirect("/");
-  } catch (err) {
-    return alert(err.message);
-  }
+  
 }

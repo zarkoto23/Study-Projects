@@ -1,5 +1,6 @@
 import page from "../../node_modules/page/page.mjs";
 import { render, html } from "../../node_modules/lit-html/lit-html.js";
+import { post,host } from "../request.js";
 
 const mainEl = document.querySelector("main");
 
@@ -9,11 +10,10 @@ export async function showCreate() {
 
 function createTemplate() {
   return html`
-    <!-- Create Page (Only for logged-in users) -->
     <section id="create">
       <div class="form">
         <h2>Add Show</h2>
-        <form class="create-form">
+        <form @submit=${onCreate} class="create-form">
           <input
             type="text"
             name="title"
@@ -45,4 +45,39 @@ function createTemplate() {
       </div>
     </section>
   `;
+}
+
+
+async function onCreate(e){
+e.preventDefault()
+
+const formData = Object.fromEntries(new FormData(e.currentTarget));
+
+
+const data = {
+  ...formData,
+  imageUrl: formData['image-url']
+};
+delete data['image-url'];
+
+for(let key in data){
+  if (data[key].trim()===''){
+    alert('All fields required!')
+    return
+  }
+  
+}
+
+try{
+  const result=await post(`${host}data/shows`,data)
+  console.log(data);
+  
+  page.redirect('/dashboard')
+
+}catch(err){
+  alert(err.message)
+}
+
+
+
 }
