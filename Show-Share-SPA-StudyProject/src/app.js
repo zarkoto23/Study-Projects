@@ -8,6 +8,8 @@ import { showDetails } from "./views/details.js";
 import { showEdit } from "./views/edit.js";
 import { showLogin } from "./views/login.js";
 import { showRegister } from "./views/register.js";
+import { showSearch } from "./views/search.js";
+
 
 page("*", (ctx, next) => {
   showNav();
@@ -18,7 +20,9 @@ page("/login", showLogin);
 page("/register", showRegister);
 page("/create", showCreate);
 page("/edit/:id", showEdit);
-page("/details/:id", showDetails);
+page("/details/:id", showDetails);        
 page("/dashboard", showDashboard);
+page("/search", showSearch);
+
 
 page();

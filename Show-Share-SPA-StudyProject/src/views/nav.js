@@ -19,13 +19,13 @@ function navTemplate(token) {
     <nav>
       <div>
         <a href="/dashboard">TV Shows</a>
-        <a href="#">Search</a>
+        <a href="/search">Search</a>
       </div>
 
       ${token
         ? html` <div class="user">
             <a href="/create">Add Show</a>
-            <a href="#" @click=${onLogout}>Logout</a>
+            <a href="" @click=${onLogout}>Logout</a>
           </div>`
         : html`
             <div class="guest">
