@@ -20,7 +20,7 @@ function homeTemplate(){
               masterpieces, discover incredible designs, and connect with
               artists and aficionados from around the world.
             </p>
-            <a href="#" id='join-us'>Join Us!</a>
+            <a href="/register" id='join-us'>Join Us!</a>
           </div>
         </section>
   `

@@ -1,41 +1,55 @@
 import page from "../../node_modules/page/page.mjs";
 import {html, render} from "../../node_modules/lit-html/lit-html.js"
+import { get, host } from "../requester.js";
+import userUtil from "../userUtil.js";
 
 const mainEl=document.querySelector('main')
 
-export async function showDetails(){
+export async function showDetails(ctx){
+const id=ctx.params.id
 
-render(detailsTemplate(), mainEl)
+try{
+  const result=await get(`${host}/data/tattoos/${id}`)
+  render(detailsTemplate(result), mainEl)
+
+}catch(err){
+  err.message
+}
 }
 
-function detailsTemplate(){
+
+function detailsTemplate(result){
+  const userId=userUtil.getUserId()
+  
   return html` 
    <section id="details">
           <div id="details-wrapper">
             <img
               id="details-img"
-              src="./images/japanese dragon.png"
+              src=${result.imageUrl}
               alt="example1"
             />
             <div>
               <div id="info-wrapper">
-                <p id="details-type">Japanese Dragon</p>
+                <p id="details-type">${result.type}</p>
                 <div id="details-description">
-                  <p id="user-type">Tattoo Artist</p>
+                  <p id="user-type">${result.userType}</p>
                   <p id="description">
-                    A majestic Japanese dragon wrapped in swirling clouds and
-                    flames, symbolizing strength, wisdom, and protection.
+                    ${result.description}
                   </p>
                 </div>
                 <h3>Like tattoo:<span id="like">0</span></h3>
+                ${result._ownerId===userId? html`
                 <!--Edit and Delete are only for creator-->
                 <div id="action-buttons">
-                  <a href="#" id="edit-btn">Edit</a>
+                  <a href="/edit/${result._id}" id="edit-btn">Edit</a>
                   <a href="#" id="delete-btn">Delete</a>
+                </div>
+
+                  `:'' }
 
                   <!--Bonus - Only for logged-in users ( not authors )-->
-                  <a href="#" id="like-btn">Like</a>
-                </div>
+                  <!-- <a href="#" id="like-btn">Like</a> -->
               </div>
             </div>
           </div>
