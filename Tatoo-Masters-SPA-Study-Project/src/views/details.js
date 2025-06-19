@@ -1,6 +1,6 @@
 import page from "../../node_modules/page/page.mjs";
 import {html, render} from "../../node_modules/lit-html/lit-html.js"
-import { get, host } from "../requester.js";
+import { del, get, host } from "../requester.js";
 import userUtil from "../userUtil.js";
 
 const mainEl=document.querySelector('main')
@@ -10,7 +10,7 @@ const id=ctx.params.id
 
 try{
   const result=await get(`${host}/data/tattoos/${id}`)
-  render(detailsTemplate(result), mainEl)
+  render(detailsTemplate(result,ctx), mainEl)
 
 }catch(err){
   err.message
@@ -18,7 +18,7 @@ try{
 }
 
 
-function detailsTemplate(result){
+function detailsTemplate(result,ctx){
   const userId=userUtil.getUserId()
   
   return html` 
@@ -43,7 +43,7 @@ function detailsTemplate(result){
                 <!--Edit and Delete are only for creator-->
                 <div id="action-buttons">
                   <a href="/edit/${result._id}" id="edit-btn">Edit</a>
-                  <a href="#" id="delete-btn">Delete</a>
+                  <a href="#" @click=${(e)=>onDelete(e, ctx)} id="delete-btn">Delete</a>
                 </div>
 
                   `:'' }
@@ -56,4 +56,19 @@ function detailsTemplate(result){
         </section>
   `
 
+}
+
+async function onDelete(e, ctx){
+
+  e.preventDefault
+  const isOk=confirm('Are You Sure?')
+  if(isOk){
+  try{const result=await del(`${host}/data/tattoos/${ctx.params.id}`)
+  page.redirect('/dashboard')
+}catch(err){
+  err.message
+}
+  }
+  else{return}
+  
 }

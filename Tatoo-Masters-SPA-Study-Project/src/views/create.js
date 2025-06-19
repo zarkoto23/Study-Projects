@@ -67,6 +67,9 @@ async function onCreate(e){
   delete data['image-url'];
   delete data['user-type'];
 
+  console.log(data);
+  
+
   
   for(let key in data){
 
