@@ -39,17 +39,19 @@ function detailsTemplate(result,ctx){
                   </p>
                 </div>
                 <h3>Like tattoo:<span id="like">0</span></h3>
+                <div id="action-buttons">
                 ${result._ownerId===userId? html`
                 <!--Edit and Delete are only for creator-->
-                <div id="action-buttons">
+                
                   <a href="/edit/${result._id}" id="edit-btn">Edit</a>
                   <a href="#" @click=${(e)=>onDelete(e, ctx)} id="delete-btn">Delete</a>
+
+                  `:html`<div><a href="#" id="like-btn">Like</a>
+                  ` }
+
+                  
                 </div>
-
-                  `:'' }
-
-                  <!--Bonus - Only for logged-in users ( not authors )-->
-                  <!-- <a href="#" id="like-btn">Like</a> -->
+                  
               </div>
             </div>
           </div>
