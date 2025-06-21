@@ -6,6 +6,7 @@ const mainEl = document.querySelector("main");
 export async function showDashboard() {
   try{
     const result = await service.getAll();
+    
      render(dashboardTemplate(result), mainEl);
      
 
