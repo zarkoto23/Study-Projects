@@ -12,23 +12,26 @@ export default async function showNav() {
 function navTemplate() {
   const token = getToken();
 
-  return html`
-    <a id="logo" href="/"
-      ><img id="logo" src="./images/logo2.png" alt="img"
-    /></a>
+return html`
+    <!-- Navigation -->
+    <a id="logo" href="/">
+      <img id="logo-img" src="./images/logo2.png" alt="logo" />
+    </a>
     <nav>
       <div>
-        <a href="/dashboard">Marketplace</a>
+        <a href="/dashboard">Solutions</a>
       </div>
 
       ${token
         ? html`
+            <!-- Logged-in users -->
             <div class="user">
-              <a href="/create">Sell</a>
-              <a @click=${onLogout}>Logout</a>
+              <a href="/create">Add Solution</a>
+              <a href="javascript:void(0)" @click=${onLogout}>Logout</a>
             </div>
           `
         : html`
+            <!-- Guest users -->
             <div class="guest">
               <a href="/login">Login</a>
               <a href="/register">Register</a>

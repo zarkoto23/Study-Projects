@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "RenewTech Cleanup Single Page Application",
   "main": "index.html",
+  "type": "module",
   "scripts": {
     "test": "mocha tests",
     "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1"

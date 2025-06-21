@@ -20,26 +20,32 @@ export default async function showDashboard() {
 
 function dashboardTemplate(result) {
   return html`
-    <h3 class="heading">Marketplace</h3>
-    <section id="dashboard">
-      ${result.map(
-        (element) => html`
-          <div class="drone">
-            <img src="${element.imageUrl}" alt="example1" />
-            <h3 class="model">${element.model}</h3>
-            <div class="drone-info">
-              <p class="price">Price: €${element.price}</p>
-              <p class="condition">Condition: ${element.condition}</p>
-              <p class="weight">Weight: ${element.weight}g</p>
-            </div>
-            <a class="details-btn" href="/details/${element._id}">Details</a>
-          </div>
-        `
-      )}
-    </section>
+    <!-- Dashboard page -->
+    <h2>Solutions</h2>
 
-    ${result.length === 0
-      ? html`<h3 class="no-drones">No Drones Available</h3>`
-      : ""}
+    ${result.length > 0 
+      ? html`
+        <section id="solutions">
+          ${result.map((e) => html` 
+            <!-- Display a div with information about every post (if any) -->
+            <div class="solution">
+              <img src=${e.imageUrl} alt="example3" />
+              <div class="solution-info">
+                <h3 class="type">${e.type}</h3>
+                <p class="description">
+                  ${e.description}
+                </p>
+                <a class="details-btn" href="/details/${e._id}">Learn More</a>
+              </div>
+            </div>
+          `)}
+        </section>
+      `
+      : html`
+        <!-- Display an h2 if there are no posts -->
+        <h2 id="no-solution">No Solutions Added.</h2>
+      `}
   `;
 }
+
+

@@ -2,9 +2,8 @@ import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import page from "../../node_modules/page/page.mjs";
 import { get, put } from "../requester.js";
 import { baseItemsUrl } from "../links.js";
-import { showError } from "../notification.js";
 
-const mainEl = document.querySelector("#main-element");
+const mainEl = document.querySelector("main");
 
 export default async function showEdit(ctx) {
   const id = ctx.params.id;
@@ -18,44 +17,43 @@ export default async function showEdit(ctx) {
 
 function editTemplate(result,id) {
   return html`
-    <section id="edit">
-      <div class="form form-item">
-        <h2>Edit Offer</h2>
-        <form @submit=${(e)=>onEdit(e, id)} class="edit-form">
-          <input
-            type="text"
-            name="model"
-            id="model"
-            value="${result.model}"
-          />
-          <input
-            type="text"
-            name="imageUrl"
-            id="imageUrl"
-            value="${result.imageUrl}"
-          />
-          <input type="number" name="price" id="price" value="${result.price}" />
-          <input type="number" name="weight" id="weight" value="${result.weight}" />
-          <input
-            type="number"
-            name="phone"
-            id="phone"
-           value="${result.phone}"
-          />
-          <input
-            type="text"
-            name="condition"
-            id="condition"
-            value="${result.condition}"
-          />
-          <textarea
-            name="description"
-            id="description"
-          >${result.description}</textarea>
-          <button type="submit">Edit</button>
-        </form>
-      </div>
-    </section>
+   <!-- Edit Page (Only for logged-in users) -->
+        <section id="edit">
+          <div class="form">
+            <img class="border" src="./images/border.png" alt="" />
+            <h2>Edit Solution</h2>
+            <form @submit=${(e)=>onEdit(e,id)} class="edit-form">
+              <input
+                type="text"
+                name="type"
+                id="type"
+                value=${result.type}
+              />
+              <input
+                type="text"
+                name="image-url"
+                id="image-url"
+                value=${result.imageUrl}
+              />
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Description"
+                rows="2"
+                cols="10"
+              >${result.description}</textarea>
+              <textarea
+                id="more-info"
+                name="more-info"
+                placeholder="more Info"
+                rows="2"
+                cols="10"
+              >${result.learnMore}</textarea>
+              <button type="submit">Edit</button>
+            </form>
+          </div>
+        </section>
+
   `;
 }
 
@@ -63,20 +61,27 @@ function editTemplate(result,id) {
 async function onEdit(e,id){
   e.preventDefault()
 
-  const droneData=Object.fromEntries(new FormData(e.currentTarget))
+  const data=Object.fromEntries(new FormData(e.currentTarget))
   
-   for(let key in droneData){
-    if(droneData[key].trim()===''){
-      showError('All fields required!')
+    data.imageUrl = data["image-url"];
+  delete data["image-url"];
+
+  data.learnMore = data["more-info"];
+  delete data["more-info"];
+
+   for(let key in data){
+    if(data[key].trim()===''){
+      alert('All fields required!')
       return
     }
    }
 
+
    try{
-   const result= await put(`${baseItemsUrl}/${id}`, droneData)
+   const result= await put(`${baseItemsUrl}/${id}`, data)
    page.redirect(`/details/${id}`)
    }catch(err){
-    showError(err.message)
+    alert(err.message)
    }
    
     

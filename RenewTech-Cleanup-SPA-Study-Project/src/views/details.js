@@ -4,7 +4,7 @@ import {get} from "../requester.js"
 import { baseItemsUrl } from "../links.js";
 import { del } from "../requester.js";
 
-const mainEl = document.querySelector("#main-element");
+const mainEl = document.querySelector("main");
 
 export default async function showDetails(ctx) {
 
@@ -19,37 +19,47 @@ export default async function showDetails(ctx) {
   }
 }
 
-function detailsTemplate(result,id) {
-  const isOwner=result._ownerId===localStorage.getItem('userId')
-  return html`
+function detailsTemplate(result, id) {
+  const userId = localStorage.getItem("userId");
+  const isOwner = result._ownerId === userId;
+  const isLoggedIn = !!userId;
 
+  return html`
     <section id="details">
       <div id="details-wrapper">
+        <img id="details-img" src=${result.imageUrl} alt="example1" />
         <div>
-          <img id="details-img" src="${result.imageUrl}" alt="example1" />
-          <p id="details-model">${result.model}</p>
-        </div>
-        <div id="info-wrapper">
-          <div id="details-description">
-            <p class="details-price">Price: €${result.price}</p>
-            <p class="details-condition">Condition: ${result.condition}</p>
-            <p class="details-weight">Weight: ${result.weight}g</p>
-            <p class="drone-description">
-              ${result.description}
-            </p>
-            <p class="phone-number">Phone: ${result.phone}</p>
+          <p id="details-type">${result.type}</p>
+          <div id="info-wrapper">
+            <div id="details-description">
+              <p id="description">${result.description}</p>
+              <p id="more-info">${result.learnMore}</p>
+            </div>
           </div>
-          ${isOwner? html`<div class="buttons">
-            <a href="/edit/${result._id}" id="edit-btn">Edit</a>
-            <a href="" id="delete-btn" @click=${(e)=>onDelete(e,id)}>Delete</a>
-          </div>`: ''}
+          <h3>Like Solution: <span id="like">0</span></h3>
 
-          
+          <div id="action-buttons">
+            ${isLoggedIn
+              ? isOwner
+                ? html`
+                    <a href="/edit/${id}" id="edit-btn">Edit</a>
+                    <a
+                      @click=${(e) => onDelete(e, id)}
+                      href="javascript:void(0)"
+                      id="delete-btn"
+                      >Delete</a
+                    >
+                  `
+                : html`<a href="#" id="like-btn">Like</a>`
+              : null}
+          </div>
         </div>
       </div>
     </section>
   `;
 }
+
+
 
 async function onDelete(e,id) {
   e.preventDefault()
