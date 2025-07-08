@@ -1,5 +1,4 @@
 import { Router } from "express";
-import movies from "../movies.js";
 import movieService from "../services/movieService.js";
 
 const routes = Router();
