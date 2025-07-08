@@ -1,5 +1,6 @@
 import { Router } from "express";
 import movieService from "../services/movieService.js";
+import Movie from "../models/Movie.js";
 
 const movieController = Router();
 
@@ -14,9 +15,9 @@ movieController.post("/create", (req, res) => {
   res.redirect("/");
 });
 
-movieController.get("/:movieId/details", (req, res) => {
+movieController.get("/:movieId/details",async (req, res) => {
   const movieId = req.params.movieId;
-  const movie = movieService.findMovie(movieId);
+  const movie = await Movie.findById(movieId).lean();
 
   res.render("details", { movie });
 });
