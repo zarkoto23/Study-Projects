@@ -18,8 +18,10 @@ export default {
     return result;
   },
 
-  findMovie(movieId) {
-    const result = movies.find((movie) => movieId == movie.id);
+ findMovie(movieId) {
+    const result = Movie.findById(movieId);
+    console.log(result);
+    
 
     return result;
   },

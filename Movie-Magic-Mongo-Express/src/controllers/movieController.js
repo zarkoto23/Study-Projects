@@ -30,7 +30,9 @@ movieController.get('/search',(req, res)=>{
     res.render('search',{movies,filter})
 })
 
-movieController.get('/:movieId/attach',(req,res)=>{
-  res.render('movie/attach')
+movieController.get('/:movieId/attach',async(req,res)=>{
+  const movieId=req.params.movieId
+  const movie=await movieService.findMovie(movieId).lean()
+  res.render('movie/attach',{movie})
 })
 export default movieController;
