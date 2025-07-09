@@ -5,4 +5,9 @@ export default {
         return Cast.create(castData)
         
     }
+    ,
+    getAll(){
+        const casts=Cast.find({})
+        return casts
+    }
 }

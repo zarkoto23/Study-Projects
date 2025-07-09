@@ -20,7 +20,6 @@ export default {
 
  findMovie(movieId) {
     const result = Movie.findById(movieId);
-    console.log(result);
     
 
     return result;
