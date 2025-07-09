@@ -34,4 +34,8 @@ export default {
    
     return newMovie
   },
+
+  findMovieCasts(movieId){
+    return this.findMovie(movieId).populate('casts')
+  }
 };
