@@ -5,20 +5,16 @@ import userServices from "../services/userServices";
 import UserItem from "./UserItem";
 import Search from "./Search";
 import Pagination from "./Pagination";
+import Err from "./Err";
 
 export default function UserList() {
-
-  const [users, setUsers]=useState([])
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    userServices.getAll()
-    .then(result=>{setUsers(result)
-      console.log(result)
-
-    })
-  
+    userServices.getAll().then((result) => {
+      setUsers([]);
+    });
   }, []);
-  
 
   return (
     <section className="card users-container">
@@ -124,7 +120,11 @@ export default function UserList() {
           </thead>
 
           <tbody>
-            <UserItem />
+            {users && users.length > 0 ? (
+              users.map((user) => <UserItem key={user._id} {...user} />)
+            ) : (
+              <Err message={"No users yet."} />
+            )}
           </tbody>
         </table>
       </div>
