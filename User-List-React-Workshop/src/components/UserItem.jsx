@@ -1,13 +1,6 @@
-export default function UserList() {
-
-  
-
-
-  
+export default function UserItem() {
   return(
-              <tbody>
-            {/* <!-- Table row component --> */}
-            <tr>
+    <tr>
               <td>
                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                   alt="Peter's profile" className="image" />
@@ -47,6 +40,5 @@ export default function UserList() {
                 </button>
               </td>
             </tr>
-          </tbody>
 )
 }
