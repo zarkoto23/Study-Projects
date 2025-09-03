@@ -15,6 +15,7 @@ export default function UserList() {
   const [users, setUsers] = useState([]);
   const [addNewUsr, setAddNewUsr]=useState(false)
   const[loading, setLoading]=useState(true)
+  const [info, setInfo]=useState(false)
 
   useEffect(() => {
     userServices.getAll().then((result) => {
@@ -25,6 +26,25 @@ export default function UserList() {
 
   function  onAddNewUsrClick() {
     setAddNewUsr(true)
+  }
+
+  const onSaveClick=async(e)=> { 
+    e.preventDefault()
+
+   const formData = new FormData(e.target);
+    const userData = Object.fromEntries(formData.entries());
+
+    const newUser=await userServices.create(userData)
+
+    setUsers([...users,newUser])
+    setAddNewUsr(false)
+    
+    
+  }
+
+  function onInfoClick(id) {
+    setInfo(true)
+    
   }
 
   return (
@@ -145,7 +165,7 @@ export default function UserList() {
 
       <Pagination />
 
-      {addNewUsr&& <Create onClose={()=>setAddNewUsr(false)}/>}
+      {addNewUsr&& <Create onClose={()=>setAddNewUsr(false)} onSave={onSaveClick}/>}
     </section>
   );
 }

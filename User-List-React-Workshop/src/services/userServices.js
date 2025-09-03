@@ -18,4 +18,29 @@ export default {
 
     return formatedData
   },
+
+  async create(userData){
+    const {country, city, street, streetNumber,...postData}=userData
+    postData.adrress={country, city, street, streetNumber}
+    postData.createdAt=new Date().toISOString()
+    postData.updatedAt=new Date().toISOString()
+
+    
+
+    const response=await fetch(`${baseUrl}`,{
+      method:'POST',
+      headers:{
+        'Content-Type':"Application/json",
+
+      },
+      body:JSON.stringify(postData)
+ 
+    })
+ 
+     const result=await response.json()
+
+     return result
+  }
+ 
+  
 };
