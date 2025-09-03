@@ -6,15 +6,26 @@ import UserItem from "./UserItem";
 import Search from "./Search";
 import Pagination from "./Pagination";
 import Err from "./Err";
+import Create from "./Create";
+import Spinner from "./Spinner";
+
+
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
+  const [addNewUsr, setAddNewUsr]=useState(false)
+  const[loading, setLoading]=useState(true)
 
   useEffect(() => {
     userServices.getAll().then((result) => {
       setUsers(result);
+      setLoading(false)
     });
   }, []);
+
+  function  onAddNewUsrClick() {
+    setAddNewUsr(true)
+  }
 
   return (
     <section className="card users-container">
@@ -120,7 +131,8 @@ export default function UserList() {
           </thead>
 
           <tbody>
-            {users && users.length > 0 ? (
+            {loading?<Spinner/>:
+             users.length > 0 ? (
               users.map((user) => <UserItem key={user._id} {...user} />)
             ) : (
               <Err message={"No users yet."} />
@@ -129,9 +141,11 @@ export default function UserList() {
         </table>
       </div>
 
-      <button className="btn-add btn">Add new user</button>
+      <button className="btn-add btn" onClick={onAddNewUsrClick}>Add new user</button>
 
       <Pagination />
+
+      {addNewUsr&& <Create />}
     </section>
   );
 }
