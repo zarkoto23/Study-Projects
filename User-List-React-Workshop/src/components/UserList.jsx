@@ -145,7 +145,7 @@ export default function UserList() {
 
       <Pagination />
 
-      {addNewUsr&& <Create />}
+      {addNewUsr&& <Create onClose={()=>setAddNewUsr(false)}/>}
     </section>
   );
 }
