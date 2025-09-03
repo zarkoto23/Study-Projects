@@ -12,7 +12,7 @@ export default function UserList() {
 
   useEffect(() => {
     userServices.getAll().then((result) => {
-      setUsers([]);
+      setUsers(result);
     });
   }, []);
 
