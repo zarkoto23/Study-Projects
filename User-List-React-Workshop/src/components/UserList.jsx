@@ -8,6 +8,7 @@ import Pagination from "./Pagination";
 import Err from "./Err";
 import Create from "./Create";
 import Spinner from "./Spinner";
+import Details from './Details'
 
 
 
@@ -17,12 +18,16 @@ export default function UserList() {
   const[loading, setLoading]=useState(true)
   const [info, setInfo]=useState(false)
 
+  const[selectedUserId, setSelectedUserId]=useState(null)
+
   useEffect(() => {
     userServices.getAll().then((result) => {
       setUsers(result);
       setLoading(false)
     });
   }, []);
+
+
 
   function  onAddNewUsrClick() {
     setAddNewUsr(true)
@@ -42,10 +47,20 @@ export default function UserList() {
     
   }
 
-  function onInfoClick(id) {
-    setInfo(true)
+
+  const onInfoClickHandler=(_id)=> {
+    // console.log('infoclickHandler', _id);
+    
+    setSelectedUserId(_id)
+    
+    
     
   }
+  useEffect(() => {
+  if (selectedUserId) {
+    setInfo(true);
+  }
+}, [selectedUserId]);
 
   return (
     <section className="card users-container">
@@ -153,7 +168,7 @@ export default function UserList() {
           <tbody>
             {loading?<Spinner/>:
              users.length > 0 ? (
-              users.map((user) => <UserItem key={user._id} {...user} />)
+              users.map((user) => <UserItem key={user._id} {...user} onInfoClick={onInfoClickHandler} />)
             ) : (
               <Err message={"No users yet."} />
             )}
@@ -164,6 +179,9 @@ export default function UserList() {
       <button className="btn-add btn" onClick={onAddNewUsrClick}>Add new user</button>
 
       <Pagination />
+      {info && selectedUserId && (
+  <Details onClose={() => setInfo(false)} userId={selectedUserId} />
+)}
 
       {addNewUsr&& <Create onClose={()=>setAddNewUsr(false)} onSave={onSaveClick}/>}
     </section>

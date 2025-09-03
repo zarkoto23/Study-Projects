@@ -1,4 +1,19 @@
-export default function Details() {
+import { useEffect, useState } from "react"
+import userServices from "../services/userServices"
+
+export default function Details({userId, onClose}) {
+  const [user, setUser]=useState(null)
+
+
+    
+    userServices.getOne(userId)
+    .then(userData=>{
+      setUser(userData)})
+    
+    
+    
+  
+  
   return(
         <div className="overlay">
       <div className="backdrop"></div>
@@ -6,7 +21,7 @@ export default function Details() {
         <div className="detail-container">
           <header className="headers">
             <h2>User Detail</h2>
-            <button className="btn close">
+            <button className="btn close" onClick={onClose}>
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                 <path fill="currentColor"
@@ -21,10 +36,10 @@ export default function Details() {
                 className="image" />
             </div>
             <div className="user-details">
-              <p>User Id: <strong>62bb0c0eda039e2fdccba57b</strong></p>
+              <p>User Id: <strong>H</strong></p>
               <p>
                 Full Name:
-                <strong> Peter Johnson </strong>
+                <strong>  </strong>
               </p>
               <p>Email: <strong>peter@abv.bg</strong></p>
               <p>Phone Number: <strong>0812345678</strong></p>

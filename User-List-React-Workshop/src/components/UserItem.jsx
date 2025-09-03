@@ -1,5 +1,4 @@
 import userServices from "../services/userServices";
-import Details from './Details'
 
 export default function UserItem({
     firstName,
@@ -23,7 +22,7 @@ export default function UserItem({
               <td>{email}</td>
               <td>{phoneNumber}</td>
               <td>{userServices.formatingDate(createdAt)}</td>
-              {onInfoClick&&<Details/>}
+              
 
               <td className="actions">
                 <button className="btn edit-btn" title="Edit">

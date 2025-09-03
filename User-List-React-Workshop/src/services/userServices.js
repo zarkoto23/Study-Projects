@@ -40,7 +40,19 @@ export default {
      const result=await response.json()
 
      return result
+  },
+
+
+  async getOne(_id){
+    const response=await fetch(`${baseUrl}/${_id}`)
+    const user=await response.json()
+    console.log(user)
+
+   return user
+    
+
   }
+
  
   
 };
